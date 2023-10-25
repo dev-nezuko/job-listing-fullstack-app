@@ -2,6 +2,12 @@
 
 ## Getting started
 
+### Clone the Repository:
+```
+git clone https://github.com/dev-nezuko/job-listing-fullstack-app.git
+```
+create a .env file and copy content from .env.example to it
+
 ### 1. Install dependencies
 
 #### Prerequisite : Node.js v18.16
@@ -61,7 +67,7 @@ Run following command in the terminal.
 yarn run test
 ```
 
-# Blogs Application
+# Jobs Application
 
 ## Installation
 
@@ -96,3 +102,6 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## UI
+<img width="1680" alt="Screenshot 2023-10-25 at 6 12 41 AM" src="https://github.com/dev-nezuko/job-listing-fullstack-app/assets/119432487/c32d8997-8da8-4fae-ad8f-27300d9d6b2e">

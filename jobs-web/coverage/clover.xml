@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1689950983312" clover="3.2.0">
+  <project timestamp="1689950983312" name="All files">
+    <metrics statements="85" coveredstatements="77" conditionals="2" coveredconditionals="2" methods="38" coveredmethods="31" elements="125" coveredelements="110" complexity="0" loc="85" ncloc="85" packages="17" files="25" classes="25"/>
+    <package name="components.FormContainer">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="FormContainer.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/components/FormContainer/FormContainer.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="9" type="stmt"/>
+        <line num="9" count="9" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.Forms.PostForm">
+      <metrics statements="8" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
+      <file name="PostForm.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/components/Forms/PostForm/PostForm.tsx">
+        <metrics statements="8" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="30" count="29" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.Forms.SigninForm">
+      <metrics statements="11" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
+      <file name="SigninForm.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/components/Forms/SigninForm/SigninForm.tsx">
+        <metrics statements="11" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="36" count="36" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.Forms.SignupForm">
+      <metrics statements="8" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
+      <file name="SignupForm.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/components/Forms/SignupForm/SignupForm.tsx">
+        <metrics statements="8" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="35" count="40" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.Header">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="Header.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/components/Header/Header.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.Post">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="Post.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/components/Post/Post.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.TextInput">
+      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="TextInput.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/components/TextInput/TextInput.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="250" type="stmt"/>
+        <line num="9" count="250" type="stmt"/>
+        <line num="11" count="250" type="stmt"/>
+      </file>
+    </package>
+    <package name="constants">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="routes.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/constants/routes.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="contexts">
+      <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <file name="AuthContext.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/contexts/AuthContext.tsx">
+        <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="12" type="stmt"/>
+        <line num="14" count="12" type="stmt"/>
+        <line num="15" count="12" type="stmt"/>
+        <line num="18" count="12" type="stmt"/>
+      </file>
+    </package>
+    <package name="fixtures">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="posts.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/fixtures/posts.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="pages.NewPost">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="NewPost.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/pages/NewPost/NewPost.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="pages.Posts">
+      <metrics statements="13" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+      <file name="Posts.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/pages/Posts/Posts.tsx">
+        <metrics statements="13" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="47" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="pages.Signin">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="Signin.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/pages/Signin/Signin.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="pages.Signup">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="Signup.tsx" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/pages/Signup/Signup.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="schemas">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="postSchema.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/schemas/postSchema.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+      <file name="signinSchema.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/schemas/signinSchema.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+      <file name="signupSchema.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/schemas/signupSchema.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="17" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="5"/>
+      <file name="authService.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/services/authService.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+      </file>
+      <file name="baseService.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/services/baseService.ts">
+        <metrics statements="11" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="1"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+      </file>
+      <file name="postService.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/services/postService.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="types">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="apiError.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/types/apiError.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="newPostPayload.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/types/newPostPayload.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="post.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/types/post.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="signin.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/types/signin.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="signupPayload.ts" path="/Users/dev/Documents/test-project/blogs/blogs-web/src/types/signupPayload.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+  </project>
+</coverage>

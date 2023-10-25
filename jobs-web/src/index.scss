@@ -1,0 +1,17 @@
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Segoe UI', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.error-message {
+  text-align: left;
+  color: red;
+  font-weight: 400;
+}

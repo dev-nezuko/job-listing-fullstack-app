@@ -1,54 +1,61 @@
-import { Router } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
-import { AuthProvider } from 'contexts/AuthContext';
-import { createMemoryHistory } from 'history';
+import Cookies from 'js-cookie';
 
-import { routes } from 'constants/routes';
-import { mockedPosts } from 'fixtures/posts';
+import { applyToJob, getJobs } from 'services/postService';
 
 import { Jobs } from '../Jobs';
+jest.mock('services/postService', () => ({ getJobs: jest.fn(), applyToJob: jest.fn() }));
+jest.mock('components/Header/Header', () => ({ Header: () => <header>Jobs</header> }));
+const mockedGet = getJobs as jest.Mock;
 
-const history = createMemoryHistory();
-const renderComponent = (): void => {
-  (axios.get as jest.Mock).mockImplementation((requestUrl) => {
-    if (requestUrl.includes('/jobs')) {
-      return Promise.resolve({ data: { payload: mockedPosts } });
-    }
+beforeEach(() => {
+  jest.clearAllMocks();
+  Cookies.set('userId', 'demo-user');
+});
+it('shows an explicit empty state', async () => {
+  mockedGet.mockResolvedValue({ data: { payload: [] } });
+  render(<Jobs />);
+  expect(await screen.findByText('No open roles are listed yet.')).toBeInTheDocument();
+});
+it('handles load failure without throwing from an effect', async () => {
+  mockedGet.mockRejectedValue(new Error('offline'));
+  render(<Jobs />);
+  expect(await screen.findByRole('alert')).toHaveTextContent('Jobs could not be loaded');
+});
+it('retains a retry after failure and disables a pending application', async () => {
+  const mockedApply = applyToJob as jest.Mock;
 
-    return Promise.reject();
+  mockedGet.mockResolvedValue({
+    data: {
+      payload: [
+        {
+          id: 'role-1',
+          title: 'Platform engineer',
+          description: 'Synthetic role',
+          experienceLevel: 'Mid-level',
+          employmentType: 'Full time',
+          createdAt: '2023-10-24T12:00:00Z',
+          applications: [],
+        },
+      ],
+    },
   });
+  let reject: (error: Error) => void = () => undefined;
 
-  render(
-    <Router location={routes.signin} navigator={history}>
-      <AuthProvider>
-        <Jobs />
-      </AuthProvider>
-    </Router>
+  mockedApply.mockImplementationOnce(
+    () =>
+      new Promise((_resolve, rejectPromise) => {
+        reject = rejectPromise;
+      })
   );
-};
-
-describe('<Jobs />', () => {
-  it('renders jobs page', async () => {
-    renderComponent();
-
-    expect(screen.getByRole('button', { name: 'Create New Job' })).toBeInTheDocument();
-
-    expect(await screen.findByText(mockedPosts[0].title)).toBeInTheDocument();
-
-    mockedPosts.forEach((post) => {
-      expect(screen.getByText(post.title)).toBeInTheDocument();
-      expect(screen.getByText(post.content)).toBeInTheDocument();
-      expect(screen.getByText(new Date(post.createdAt).toLocaleString())).toBeInTheDocument();
-    });
-  });
-
-  it('redirects to create post page when clicked on create new post button', async () => {
-    renderComponent();
-
-    userEvent.click(screen.getByRole('button', { name: 'Create New Job' }));
-
-    await waitFor(() => expect(history.location.pathname).toBe(routes.newPost));
-  });
+  render(<Jobs />);
+  await userEvent.click(await screen.findByRole('button', { name: 'Apply to job' }));
+  expect(screen.getByRole('button', { name: 'Applying…' })).toBeDisabled();
+  reject(new Error('offline'));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Application was not saved');
+  mockedApply.mockResolvedValueOnce({});
+  await userEvent.click(screen.getByRole('button', { name: 'Apply to job' }));
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Applied' })).toBeDisabled());
+  expect(applyToJob).toHaveBeenCalledTimes(2);
 });

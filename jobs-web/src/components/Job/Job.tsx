@@ -1,10 +1,5 @@
-import { useCallback } from 'react';
-import { Button } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import { useRef, useState } from 'react';
+import { Alert, Button, Card, CardContent, Chip, Grid, Stack, Typography } from '@mui/material';
 import Cookies from 'js-cookie';
 import { JobType } from 'types/job';
 
@@ -12,55 +7,59 @@ import { applyToJob } from 'services/postService';
 
 interface Props {
   job: JobType;
-  updateJob: (id: number) => void;
+  updateJob: (id: string) => void;
 }
-
 export const Job = ({ job, updateJob }: Props): JSX.Element => {
-  console.log('🚀 ~ file: Job.tsx:18 ~ Job ~ job:', job);
   const userId = Cookies.get('userId');
-  const isAlreadyApplied = job.applications.includes(userId as string);
-  const handleSubmit = useCallback(
-    async (jobId: number) => {
-      applyToJob(jobId).then(() => {
-        updateJob(job.id);
-      });
-    },
-    [job.id, updateJob]
-  );
+  const applied = job.applications.includes(userId || '');
+  const [isPending, setPending] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const inFlight = useRef(false);
+  const apply = async (): Promise<void> => {
+    if (inFlight.current || applied) {
+      return;
+    }
+
+    inFlight.current = true;
+    setPending(true);
+    setFailed(false);
+
+    try {
+      await applyToJob(job.id);
+      updateJob(job.id);
+    } catch {
+      setFailed(true);
+    } finally {
+      inFlight.current = false;
+      setPending(false);
+    }
+  };
 
   return (
     <Grid item xs={12} md={6}>
-      <CardActionArea>
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              Title: {job.title}
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              Experience Level: {job.experienceLevel}
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              Employment type: {job.employmentType}
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              Job Description: {job.description}
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              Creation Date: {new Date(job.createdAt).toLocaleString()}
-            </Typography>
-
-            <Button
-              disabled={isAlreadyApplied}
-              onClick={() => handleSubmit(job.id)}
-              type="submit"
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {isAlreadyApplied ? 'Already Applied' : 'Apply'}
-            </Button>
-          </CardContent>
-        </Card>
-      </CardActionArea>
+      <Card variant="outlined" sx={{ height: '100%', borderRadius: 3 }}>
+        <CardContent sx={{ p: 3 }}>
+          <Typography component="h2" variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
+            {job.title}
+          </Typography>
+          <Stack direction="row" useFlexGap flexWrap="wrap" spacing={1} sx={{ mb: 2 }}>
+            <Chip size="small" label={job.experienceLevel} />
+            <Chip size="small" variant="outlined" label={job.employmentType} />
+          </Stack>
+          <Typography sx={{ mb: 2, whiteSpace: 'pre-line' }}>{job.description}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Posted {new Date(job.createdAt).toLocaleDateString()}
+          </Typography>
+          {failed && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              Application was not saved. Please try again.
+            </Alert>
+          )}
+          <Button disabled={applied || isPending} onClick={apply} variant="contained" sx={{ mt: 3 }}>
+            {applied ? 'Applied' : isPending ? 'Applying…' : 'Apply to job'}
+          </Button>
+        </CardContent>
+      </Card>
     </Grid>
   );
 };

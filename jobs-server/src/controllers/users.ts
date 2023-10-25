@@ -6,7 +6,7 @@ import {
 import { PrismaClient } from "@prisma/client";
 import sendResponse from "../helpers/responseHelper";
 import { compareData, encryptData } from "../helpers/encryptionHelpers";
-import jwt from "jsonwebtoken";
+import { issueToken } from '../helpers/jwtHelper';
 import RESPONSE_CODES from "../constants/responseCodes";
 
 const prisma = new PrismaClient();
@@ -52,9 +52,8 @@ export const handleLogin = async (req: Request, res: Response) => {
   });
   if (user) {
     const isAuth = compareData(password, user.password);
-    const jwtKey = process.env.JWT_KEY || "jwtsecret";
     if (isAuth) {
-      const token = jwt.sign({ user: user.id }, jwtKey);
+      const token = issueToken(user.id);
       return sendResponse(res, { authtoken: token, userId: user.id });
     }
   }

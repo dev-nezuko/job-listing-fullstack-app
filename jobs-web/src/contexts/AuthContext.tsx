@@ -1,4 +1,5 @@
-import { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useState } from 'react';
+import Cookies from 'js-cookie';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -7,13 +8,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 const AuthProvider = ({ children }: PropsWithChildren): JSX.Element => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    JSON.parse(window.localStorage.getItem('isAuthenticated') || 'false')
-  );
-
-  useEffect(() => {
-    window.localStorage.setItem('isAuthenticated', JSON.stringify(isAuthenticated));
-  }, [isAuthenticated]);
+  const [isAuthenticated, setIsAuthenticated] = useState(Boolean(Cookies.get('authtoken')));
 
   return <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>{children}</AuthContext.Provider>;
 };

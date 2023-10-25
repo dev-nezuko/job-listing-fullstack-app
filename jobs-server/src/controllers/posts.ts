@@ -31,7 +31,6 @@ export const getPosts = async (req: CustomRequest, res: Response) => {
 export const applyToPost = async (req: CustomRequest, res: Response) => {
   await applyJobSchema.validate(req.body);
   const userId = req.userId as string;
-  console.log("🚀 ~ file: posts.ts:41 ~ applyToPost ~ req.body:", req.body);
   const { jobId } = req.body;
 
   const job = await prisma.job.findUnique({
@@ -44,16 +43,9 @@ export const applyToPost = async (req: CustomRequest, res: Response) => {
     throw new Error("Job not found");
   }
 
-  const currentApplications = job.applications || [];
-  currentApplications.push(userId);
-
-  await prisma.job.update({
-    where: {
-      id: jobId,
-    },
-    data: {
-      applications: currentApplications, // Update the applications array with the new value
-    },
+  await prisma.job.updateMany({
+    where: { id: jobId, NOT: { applications: { has: userId } } },
+    data: { applications: { push: userId } },
   });
 
   sendResponse(res);

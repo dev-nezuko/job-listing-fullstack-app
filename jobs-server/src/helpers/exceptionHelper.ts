@@ -7,9 +7,8 @@ const exceptionHandler = (executable: Function) => async (req: Request, res: Res
     const result = await executable(req, res, next);
     return result;
   } catch (error: any) {
-    console.log(error);
     const errorCode = error.name === 'ValidationError' ? 400 : 500;
-    sendResponse(res, {}, error.message, errorCode);
+    sendResponse(res, {}, errorCode === 400 ? 'Invalid request' : 'Request could not be completed', errorCode);
   }
 };
 

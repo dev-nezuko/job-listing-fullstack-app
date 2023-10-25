@@ -1,135 +1,72 @@
-# Jobs Server
+# A small job board, end to end
 
-## Getting started
+A React client and an Express/Prisma API for browsing seeded roles and recording a signed-in user's interest. An application is a user ID attached to a job: there is no CV upload, employer review workflow, email delivery, or hiring pipeline.
 
-This is a full-stack web application that combines a React-based frontend with a Node.js Express backend, and it uses PostgreSQL for the database. In this project, users can browse job listings and apply for jobs. Upon applying, the "Apply to Job" button transforms into "Applied," and users can also sign up and log in to manage their applications and access additional features.
+![Job listings using synthetic browser fixtures](docs/jobs-desktop.png)
 
-**Features**
-- Job Listings: View a list of available job opportunities.
-- Job Application: Users can apply for jobs by clicking the "Apply to Job" button, which changes to "Applied" upon submission.
-- User Authentication: Register and log in to the platform to manage job applications and access personalized features.
+The useful engineering detail is the application boundary. The browser waits for a successful save before showing **Applied**, disables repeated clicks while saving, and leaves a retry after a failure. PostgreSQL receives a conditional atomic array push, so concurrent applicants do not overwrite a read-modify-write snapshot and the same user is not appended twice. That database behavior still needs an integration test against PostgreSQL.
 
-**Technologies Used**
-- Frontend: React
-- Backend: Node.js with Express
-- Database: PostgreSQL
+## Where things live
 
-**Getting Started**
-To get started with this project, follow the instructions below:
+| Directory | Responsibility |
+| --- | --- |
+| `jobs-web/src/pages/Jobs` | Loading, error, empty, and listing states |
+| `jobs-web/src/components/Job` | Per-role application and retry |
+| `jobs-server/src/controllers` | Registration, login, listings, applications |
+| `jobs-server/src/helpers/jwtHelper.ts` | Required signing key, HS256 verification, one-hour expiry |
+| `jobs-server/prisma` | PostgreSQL schema, migration, demo seed |
 
-**Prerequisites**
-- Node.js installed
-- npm (Node Package Manager) installed
-- PostgreSQL installed and running
+Requests go from React through Axios to Express at `/api`, then Prisma to PostgreSQL. UUIDs are strings throughout. The frontend cookie is a display hint; API authorization comes from a verified token.
 
+## Run locally
 
+Use a local PostgreSQL database and a compatible Node installation. The project originated on Node 18; the source checks and frontend build were verified on Node 22. Legacy dependencies remain, so keep this as a local exercise until they and the deployment controls have been reviewed.
 
-## UI
-<img width="1680" alt="Screenshot 2023-10-25 at 6 12 41 AM" src="https://github.com/dev-nezuko/job-listing-fullstack-app/assets/119432487/c32d8997-8da8-4fae-ad8f-27300d9d6b2e">
+From `jobs-server`:
 
-
-### Clone the Repository:
-```
-git clone https://github.com/dev-nezuko/job-listing-fullstack-app.git
-```
-create a .env file and copy content from .env.example to it
-
-### 1. Install dependencies
-
-#### Prerequisite : Node.js v18.16
-
-Install dependencies using yarn:
-
-```
-yarn install
+```sh
+npm ci --ignore-scripts
+cp .env.example .env
+node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 ```
 
-### 2. Setup environment variables
+Put your database connection in `DATABASE_URL` and the generated private value in `JWT_KEY`. Never commit either. The API refuses signing keys shorter than 32 characters. Native bcrypt may require its platform binary or a build after dependency review; installation scripts were intentionally skipped during verification.
 
-Rename `.env.example` file with `.env`.
-By default, Database URI is set to:
-
-```
-postgresql://root:root@localhost:5432/jobs-db
-```
-
-Make sure to replace `root (username)` & `root (password)` in `DATABASE_URL` with your PostgreSQL username & password set on your local machine.
-Default server port is set to 8080. You can change it in env file by changing `PORT` value if 8080 is already in use for your machine.
-
-### 3. Setup, migrate & seed database
-
-Run following commands in the terminal:
-
-```
+```sh
+npx prisma generate
 npx prisma migrate deploy
-```
-
-```
 npx prisma db seed
+npm run dev
 ```
 
-### 4. Start the server
+The seed writes demonstration users and roles to the configured database. Use a dedicated disposable database, never a production database. The API binds to `127.0.0.1:8080` by default.
 
-For production server, run this command:
+In a second terminal, from `jobs-web`:
 
-```
-yarn start
-```
-
-For development server, run this command:
-
-```
-yarn run dev
+```sh
+npm ci --ignore-scripts
+cp .env.example .env
+npm start
 ```
 
-Server will start at `http://localhost:8080` by default.
+Open `http://localhost:3000`, register, sign in, and browse roles. `REACT_APP_API_URL` should include `/api`; restart the client after changing it.
 
-## Running test cases
+## API sketch
 
-Quit the server if it is running.
-Run following command in the terminal.
+| Method | Path | Behavior |
+| --- | --- | --- |
+| POST | `/api/auth/signup` | Register with name, email, password |
+| POST | `/api/auth/login` | Return a token and user ID |
+| GET | `/api/jobs?title=engineer` | List roles, optionally filter title |
+| POST | `/api/jobs/apply` | Save `{"jobId":"<job UUID>"}` for the verified user |
 
-```
-yarn run test
-```
+Protected requests use the existing `authtoken` header. The browser reads the current cookie for each request, rather than capturing the pre-login value. Successful responses use the existing `payload` envelope.
 
-# Jobs Application
+## Checks and limits
 
-## Installation
+Backend: `npx tsc --noEmit` and `node -r ts-node/register --test tests/auth-boundary.test.cjs`. Frontend: `CI=true npm test -- --watchAll=false --runInBand` and `npm run build`. The legacy backend Mocha suite needs a separately configured PostgreSQL database and was not run.
 
-Install dependencies using yarn:
+The screenshots use invented roles and an intercepted API, not live accounts or a live database. Browser checks cover a failed application, retry, successful state, and a 390 px layout.
 
-```
-npm install --global yarn
-yarn install
-```
-
-## Available Scripts
-
-## Run the app in the development mode.
-
-```
-yarn start
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-
-
-
-## Running test cases
-
-Quit the server if it is running.
-Run following command in the terminal.
-
-```
-yarn run test
-```
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-
-
+Before hosting: add login rate limits, pagination, authorization appropriate to employer/admin roles, a tested relational application model, and server-managed sessions or equivalent XSS protection. Current tokens are JavaScript-readable cookies; signing out/revoking active tokens and server-side session management are not implemented. Listing responses expose applicant IDs to signed-in users. There is no application-management UI.
 

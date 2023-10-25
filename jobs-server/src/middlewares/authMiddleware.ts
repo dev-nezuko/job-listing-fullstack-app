@@ -1,34 +1,15 @@
-import jwt from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
-import { IncomingHttpHeaders } from "http";
-import sendResponse from "../helpers/responseHelper";
-import { CustomRequest } from "../interfaces/request";
-import RESPONSE_CODES from "../constants/responseCodes";
+import { Request, Response, NextFunction } from 'express';
+import { verifyToken } from '../helpers/jwtHelper';
+import { CustomRequest } from '../interfaces/request';
 
 const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-  const headers: IncomingHttpHeaders = req.headers;
-  const token = headers.authtoken;
-  const jwtKey = process.env.JWT_KEY;
-  if (token == null)
-    return sendResponse(
-      res,
-      {},
-      "Unauthorized user",
-      RESPONSE_CODES.authorizationError
-    );
-
-  jwt.verify(token as string, jwtKey as string, (err, data: any) => {
-    if (err)
-      return sendResponse(
-        res,
-        {},
-        "Unauthorized user",
-        RESPONSE_CODES.authorizationError
-      );
-    const customReq = req as CustomRequest;
-    customReq.userId = data.user;
-    next();
-  });
+  const token = req.headers.authtoken;
+  if (typeof token !== 'string') return res.status(401).json({ message: 'Unauthorized user' });
+  try {
+    (req as CustomRequest).userId = verifyToken(token);
+  } catch {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+  return next();
 };
-
 export default authenticateToken;

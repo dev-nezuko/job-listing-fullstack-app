@@ -24,11 +24,11 @@ const addUser = async () => {
       data: { ...userData, password: encryptedPassword },
     });
     console.log(`Created new user: ${userObj.email}`);
-    JOBS.forEach(async (postData: Job) => {
+    for (const postData of JOBS) {
       await prisma.job.create({
         data: postData,
       });
-    });
+    }
     console.log(`Created dummy jobs`);
   }
 };

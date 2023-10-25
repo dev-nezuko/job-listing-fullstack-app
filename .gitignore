@@ -25,3 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 dist/
 .env
+
+# Generated output at any project depth
+coverage/
+build/
+.test-build/

@@ -1,54 +1,22 @@
-import AdbIcon from '@mui/icons-material/Adb';
-import { AppBar, Box, Container, Link, Toolbar, Typography } from '@mui/material';
+import { AppBar, Container, Link, Toolbar, Typography } from '@mui/material';
 
 import { routes } from 'constants/routes';
 
 export const Header = (): JSX.Element => (
-  <AppBar position="static">
-    <Container maxWidth="xl">
-      <Toolbar disableGutters>
-        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+  <AppBar position="static" elevation={0} sx={{ background: '#162c35' }}>
+    <Container maxWidth="lg">
+      <Toolbar disableGutters sx={{ justifyContent: 'space-between', gap: 2 }}>
         <Typography
+          component="a"
+          href={routes.jobs}
           variant="h6"
-          noWrap
-          component="a"
-          href="/"
-          sx={{
-            mr: 2,
-            display: { xs: 'none', md: 'flex' },
-            fontFamily: 'monospace',
-            fontWeight: 700,
-            letterSpacing: '.3rem',
-            color: 'inherit',
-            textDecoration: 'none',
-          }}
+          sx={{ color: 'inherit', textDecoration: 'none', fontWeight: 700 }}
         >
-          LOGO
+          Open roles
         </Typography>
-        <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-        <Typography
-          variant="h5"
-          noWrap
-          component="a"
-          href=""
-          sx={{
-            mr: 2,
-            display: { xs: 'flex', md: 'none' },
-            flexGrow: 1,
-            fontFamily: 'monospace',
-            fontWeight: 700,
-            letterSpacing: '.3rem',
-            color: 'inherit',
-            textDecoration: 'none',
-          }}
-        >
-          LOGO
-        </Typography>
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <Link href={routes.jobs} sx={{ my: 2, color: 'white', display: 'block' }}>
-            Jobs
-          </Link>
-        </Box>
+        <Link href={routes.jobs} color="inherit">
+          Browse jobs
+        </Link>
       </Toolbar>
     </Container>
   </AppBar>

@@ -20,13 +20,21 @@ export const SigninForm = (): JSX.Element => {
         .then(({ data }) => {
           const { authtoken, userId } = data.payload;
 
-          Cookies.set('authtoken', authtoken);
-          Cookies.set('userId', userId);
+          Cookies.set('authtoken', authtoken, {
+            expires: 1 / 24,
+            sameSite: 'strict',
+            secure: window.location.protocol === 'https:',
+          });
+          Cookies.set('userId', userId, {
+            expires: 1 / 24,
+            sameSite: 'strict',
+            secure: window.location.protocol === 'https:',
+          });
           setIsAuthenticated(true);
           navigate(routes.jobs);
         })
-        .catch((error) => {
-          setFieldError('password', error.response.data.message);
+        .catch(() => {
+          setFieldError('password', 'Sign-in failed. Check your details and try again.');
         });
     },
     [navigate, setIsAuthenticated]
